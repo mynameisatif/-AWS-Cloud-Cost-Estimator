@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Estimate and analyze your AWS infrastructure costs with CloudCost.">
+
+    <title>CloudCost | AWS Cost Estimator</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Application Layout -->
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-logo">C</div>
+                <span>CloudCost</span>
+            </div>
+
+            <p class="sidebar-label">WORKSPACE</p>
+
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-link active">
+                    <span>▦</span> Overview
+                </a>
+
+                <a href="#calculator" class="nav-link">
+                    <span>⌁</span> Select Resources
+                </a>
+
+                <a href="#breakdown" class="nav-link">
+                    <span>◷</span> Cost Breakdown
+                </a>
+
+                
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator"></div>
+                <span>Demo Environment</span>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar">
+
+                <div>
+                    <p class="breadcrumb">CLOUD FINANCE / DASHBOARD</p>
+                    <h1>AWS Cost Estimator</h1>
+                </div>
+
+                <div class="header-actions">
+                    
+<select id="regionSelect" class="region-select" aria-label="Select AWS region">
+    <option value="us-east-1">US East (N. Virginia)</option>
+    <option value="ap-south-1">Asia Pacific (Mumbai)</option>
+    <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+    <option value="eu-west-1">Europe (Ireland)</option>
+</select>
+
+
+                    <button id="resetButton" class="reset-button">
+                        ↻ Reset
+                    </button>
+                </div>
+
+            </header>
+
+
+            <!-- Overview -->
+            <section id="overview" class="welcome-section">
+
+                <div>
+                    <h2>
+                        Manage your cloud costs
+                        <span>smarter.</span>
+                    </h2>
+
+                    <p>
+                        Configure your AWS resources and estimate
+                        your infrastructure expenses.
+                    </p>
+                </div>
+
+                <div class="billing-period">
+                    <span>ESTIMATION PERIOD</span>
+                    <strong>730 Hours / Month</strong>
+                </div>
+
+            </section>
+
+
+            <!-- Summary Cards -->
+            <section class="summary-grid">
+
+                <article class="summary-card primary-card">
+                    <p>Estimated Monthly Cost</p>
+
+                    <h2 id="monthlyTotal">$0.00</h2>
+
+                    <span>Based on selected resources</span>
+                </article>
+
+
+                <article class="summary-card">
+                    <p>Estimated Yearly Cost</p>
+
+                    <h2 id="yearlyTotal">$0.00</h2>
+
+                    <span>12-month projection</span>
+                </article>
+
+
+                <article class="summary-card">
+                    <p>Selected Services</p>
+
+                    <h2 id="serviceCount">0</h2>
+
+                    <span>Active AWS resources</span>
+                </article>
+
+            </section>
+
+
+            <!-- Calculator Section -->
+            <section id="calculator" class="dashboard-grid">
+
+                <div class="calculator-panel">
+
+                    <div class="section-heading">
+                        <div>
+                            <p class="section-label">CONFIGURATION</p>
+                            <h3>Configure AWS Resources</h3>
+                        </div>
+
+                        <span class="editable-badge">EDITABLE</span>
+                    </div>
+
+
+                    <!-- EC2 Configuration -->
+                    <article class="resource-card">
+
+                        <div class="resource-heading">
+
+                            <div class="resource-icon ec2-icon">
+                                EC2
+                            </div>
+
+                            <div>
+                                <h4>Amazon EC2</h4>
+                                <p>Elastic Compute Cloud</p>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox"
+                                       id="ec2Enabled"
+                                       checked>
+                                <span></span>
+                            </label>
+
+                        </div>
+
+                        <div class="resource-fields" id="ec2Fields">
+
+                            <label>
+                                Instance Type
+
+                                <select id="ec2Instance">
+                                    <option value="t2.micro">
+                                        t2.micro
+                                    </option>
+
+                                    <option value="t3.small">
+                                        t3.small
+                                    </option>
+
+                                    <option value="t3.medium">
+                                        t3.medium
+                                    </option>
+
+                                    <option value="m5.large">
+                                        m5.large
+                                    </option>
+                                </select>
+                            </label>
+
+
+                            <label>
+                                Number of Instances
+
+                                <input type="number"
+                                       id="ec2Count"
+                                       value="1"
+                                       min="0">
+                            </label>
+
+
+                            <label>
+                                Running Hours / Month
+
+                                <input type="number"
+                                       id="ec2Hours"
+                                       value="730"
+                                       min="0"
+                                       max="730">
+                            </label>
+
+                            <div class="resource-cost">
+                                <span>Estimated EC2 Cost</span>
+                                <strong id="ec2Cost">$0.00</strong>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- S3 Configuration -->
+                    <article class="resource-card">
+
+                        <div class="resource-heading">
+
+                            <div class="resource-icon s3-icon">
+                                S3
+                            </div>
+
+                            <div>
+                                <h4>Amazon S3</h4>
+                                <p>Simple Storage Service</p>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox"
+                                       id="s3Enabled"
+                                       checked>
+                                <span></span>
+                            </label>
+
+                        </div>
+
+                        <div class="resource-fields" id="s3Fields">
+
+                            <label>
+                                Storage Class
+
+                                <select id="s3StorageClass">
+                                    <option value="STANDARD">
+                                        S3 Standard
+                                    </option>
+
+                                    <option value="STANDARD_IA">
+                                        S3 Standard-IA
+                                    </option>
+
+                                    <option value="GLACIER">
+                                        S3 Glacier
+                                    </option>
+                                </select>
+                            </label>
+
+
+                            <label>
+                                Storage Amount (GB)
+
+                                <input type="number"
+                                       id="s3Storage"
+                                       value="100"
+                                       min="0">
+                            </label>
+
+                            <div class="resource-cost">
+                                <span>Estimated S3 Cost</span>
+                                <strong id="s3Cost">$0.00</strong>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RDS Configuration -->
+                    <article class="resource-card">
+
+                        <div class="resource-heading">
+
+                            <div class="resource-icon rds-icon">
+                                RDS
+                            </div>
+
+                            <div>
+                                <h4>Amazon RDS</h4>
+                                <p>Relational Database Service</p>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox"
+                                       id="rdsEnabled">
+                                <span></span>
+                            </label>
+
+                        </div>
+
+                        <div class="resource-fields" id="rdsFields">
+
+                            <label>
+                                Instance Type
+
+                                <select id="rdsInstance">
+                                    <option value="db.t3.micro">
+                                        db.t3.micro
+                                    </option>
+
+                                    <option value="db.t3.small">
+                                        db.t3.small
+                                    </option>
+
+                                    <option value="db.t3.medium">
+                                        db.t3.medium
+                                    </option>
+                                </select>
+                            </label>
+
+                            <label>
+                                Running Hours / Month
+
+                                <input type="number"
+                                       id="rdsHours"
+                                       value="730"
+                                       min="0"
+                                       max="730">
+                            </label>
+
+                            <div class="resource-cost">
+                                <span>Estimated RDS Cost</span>
+                                <strong id="rdsCost">$0.00</strong>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Data Transfer -->
+                    <article class="resource-card">
+
+                        <div class="resource-heading">
+
+                            <div class="resource-icon transfer-icon">
+                                NET
+                            </div>
+
+                            <div>
+                                <h4>Data Transfer</h4>
+                                <p>Outbound Data Transfer</p>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox"
+                                       id="transferEnabled"
+                                       checked>
+                                <span></span>
+                            </label>
+
+                        </div>
+
+                        <div class="resource-fields"
+                             id="transferFields">
+
+                            <label>
+                                Outbound Data (GB)
+
+                                <input type="number"
+                                       id="transferGB"
+                                       value="50"
+                                       min="0">
+                            </label>
+
+                            <label>
+                                Rate Per GB (USD)
+
+                                <input type="number"
+                                       id="transferRate"
+                                       value="0.09"
+                                       min="0"
+                                       step="0.001">
+                            </label>
+
+                            <div class="resource-cost">
+                                <span>Estimated Transfer Cost</span>
+                                <strong id="transferCost">$0.00</strong>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- Cost Breakdown -->
+                <div id="breakdown" class="breakdown-panel">
+
+                    <div class="section-heading">
+                        <div>
+                            <p class="section-label">COST ANALYSIS</p>
+                            <h3>Monthly Breakdown</h3>
+                        </div>
+
+                        <span class="currency-badge">USD</span>
+                    </div>
+
+
+                    <div class="chart-container">
+
+                        <canvas id="costChart"></canvas>
+
+                        <div class="chart-center">
+                            <strong id="chartTotal">$0.00</strong>
+                            <span>MONTHLY COST</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-legend">
+
+                        <div>
+                            <span class="legend-dot ec2-dot"></span>
+                            <span>EC2 Compute</span>
+                            <strong id="ec2Legend">$0.00</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-dot s3-dot"></span>
+                            <span>S3 Storage</span>
+                            <strong id="s3Legend">$0.00</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-dot rds-dot"></span>
+                            <span>RDS Database</span>
+                            <strong id="rdsLegend">$0.00</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-dot transfer-dot"></span>
+                            <span>Data Transfer</span>
+                            <strong id="transferLegend">$0.00</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                
+<section class="breakdown-panel">
+    <div class="section-heading">
+        <div>
+            <h2>Cost Breakdown</h2>
+            <p>Monthly cost distribution by AWS service</p>
+        </div>
+
+        <button id="exportCSV" class="export-button">
+            Export CSV
+        </button>
+    </div>
+
+    <div class="breakdown-list">
+        <div class="breakdown-item">
+            <div class="breakdown-label">
+                <span class="service-dot ec2-dot"></span>
+                <span>Amazon EC2</span>
+            </div>
+            <strong id="ec2Percentage">0%</strong>
+            <div class="breakdown-track">
+                <div id="ec2Progress" class="breakdown-progress ec2-progress"></div>
+            </div>
+        </div>
+
+        <div class="breakdown-item">
+            <div class="breakdown-label">
+                <span class="service-dot s3-dot"></span>
+                <span>Amazon S3</span>
+            </div>
+            <strong id="s3Percentage">0%</strong>
+            <div class="breakdown-track">
+                <div id="s3Progress" class="breakdown-progress s3-progress"></div>
+            </div>
+        </div>
+
+        <div class="breakdown-item">
+            <div class="breakdown-label">
+                <span class="service-dot rds-dot"></span>
+                <span>Amazon RDS</span>
+            </div>
+            <strong id="rdsPercentage">0%</strong>
+            <div class="breakdown-track">
+                <div id="rdsProgress" class="breakdown-progress rds-progress"></div>
+            </div>
+        </div>
+
+        <div class="breakdown-item">
+            <div class="breakdown-label">
+                <span class="service-dot transfer-dot"></span>
+                <span>Data Transfer</span>
+            </div>
+            <strong id="transferPercentage">0%</strong>
+            <div class="breakdown-track">
+                <div id="transferProgress" class="breakdown-progress transfer-progress"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+            </section>
+
+
+            <!-- Pricing Information -->
+            <section id="pricing" class="pricing-panel">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">TRANSPARENCY</p>
+                        <h3>Pricing Assumptions</h3>
+                    </div>
+                </div>
+
+                <p>
+                    This estimator uses configurable sample pricing
+                    for educational purposes. Actual AWS costs depend
+                    on region, usage, billing tiers, and additional
+                    service charges.
+                </p>
+
+                <a href="https://calculator.aws/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Open Official AWS Pricing Calculator ↗
+                </a>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+                <span>CloudCost © 2026</span>
+                <span>Built for learning · Not an official AWS tool</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="js/pricing.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
