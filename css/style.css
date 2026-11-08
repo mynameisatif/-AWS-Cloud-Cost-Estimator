@@ -1,0 +1,939 @@
+
+/* =========================================
+   1. GLOBAL SETTINGS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #172b45;
+    --secondary: #f59a38;
+    --background: #f5f7fa;
+    --white: #ffffff;
+    --text: #243449;
+    --muted: #8793a2;
+    --border: #e8edf2;
+
+    --ec2: #f39a3d;
+    --s3: #5d9bd8;
+    --rds: #9875d6;
+    --transfer: #46b58e;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 14px;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================================
+   2. MAIN APPLICATION LAYOUT
+========================================= */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   3. SIDEBAR
+========================================= */
+
+.sidebar {
+    width: 245px;
+    min-width: 245px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+
+    color: var(--primary);
+    margin-bottom: 55px;
+}
+
+.brand-logo {
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--secondary);
+    color: white;
+
+    border-radius: 10px;
+    font-size: 21px;
+}
+
+.sidebar-label {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+
+    margin: 0 0 15px 10px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: #697789;
+
+    padding: 13px;
+    border-radius: 9px;
+
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-link span {
+    font-size: 17px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: #fff3e6;
+    color: #d87916;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #35b887;
+}
+
+
+/* =========================================
+   4. MAIN CONTENT
+========================================= */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 42px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   5. TOP HEADER
+========================================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.breadcrumb {
+    color: #98a3b1;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    margin-bottom: 7px;
+}
+
+.topbar h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.region-badge,
+.currency-badge {
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: white;
+    color: #687789;
+    font-size: 11px;
+}
+
+.reset-button {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    padding: 10px 14px;
+
+    color: #687789;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reset-button:hover {
+    color: #d87916;
+    border-color: var(--secondary);
+}
+
+
+/* =========================================
+   6. WELCOME SECTION
+========================================= */
+
+.welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin: 38px 0 25px;
+    gap: 20px;
+}
+
+.welcome-section h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 28px;
+    line-height: 1.3;
+    margin-bottom: 9px;
+}
+
+.welcome-section h2 span {
+    color: #e28a2e;
+}
+
+.welcome-section p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.billing-period {
+    text-align: right;
+}
+
+.billing-period span {
+    display: block;
+    color: #98a3b1;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 7px;
+}
+
+.billing-period strong {
+    font-size: 13px;
+}
+
+
+/* =========================================
+   7. SUMMARY CARDS
+========================================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+    margin-bottom: 22px;
+}
+
+.summary-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 21px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(25, 45, 70, 0.06);
+}
+
+.summary-card p {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.summary-card h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 29px;
+    margin: 13px 0 8px;
+}
+
+.summary-card span {
+    color: #9ba5b2;
+    font-size: 10px;
+}
+
+.primary-card {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.primary-card p,
+.primary-card span {
+    color: #c2cedb;
+}
+
+.primary-card h2 {
+    color: white;
+}
+
+
+/* =========================================
+   8. DASHBOARD GRID
+========================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.85fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.calculator-panel,
+.breakdown-panel,
+.pricing-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 22px;
+}
+
+
+/* =========================================
+   9. SECTION HEADINGS
+========================================= */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 19px;
+}
+
+.section-label {
+    color: #98a3b1;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    margin-bottom: 6px;
+}
+
+.section-heading h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+}
+
+.editable-badge {
+    color: #d7832d;
+    background: #fff4e8;
+
+    padding: 7px 10px;
+    border-radius: 5px;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   10. RESOURCE CARDS
+========================================= */
+
+.resource-card {
+    border-top: 1px solid var(--border);
+    padding: 19px 0 15px;
+}
+
+.resource-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.resource-heading > div:nth-child(2) {
+    flex: 1;
+}
+
+.resource-heading h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.resource-heading p {
+    font-size: 10px;
+    color: #9aa4b1;
+}
+
+.resource-icon {
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.ec2-icon {
+    background: #fff0df;
+    color: var(--ec2);
+}
+
+.s3-icon {
+    background: #e8f2ff;
+    color: var(--s3);
+}
+
+.rds-icon {
+    background: #f1ebff;
+    color: var(--rds);
+}
+
+.transfer-icon {
+    background: #e9f8f2;
+    color: var(--transfer);
+}
+
+
+/* =========================================
+   11. TOGGLE SWITCH
+========================================= */
+
+.toggle {
+    position: relative;
+    width: 36px;
+    height: 20px;
+}
+
+.toggle input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.toggle span {
+    position: absolute;
+    inset: 0;
+
+    background: #cbd3dc;
+    border-radius: 20px;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.toggle span::before {
+    content: "";
+
+    position: absolute;
+    width: 14px;
+    height: 14px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.toggle input:checked + span {
+    background: var(--secondary);
+}
+
+.toggle input:checked + span::before {
+    transform: translateX(16px);
+}
+
+
+/* =========================================
+   12. RESOURCE INPUT FIELDS
+========================================= */
+
+.resource-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    margin: 17px 0 0 51px;
+}
+
+.resource-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    color: #7b8795;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.resource-fields input,
+.resource-fields select {
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px;
+    border: 1px solid #e5eaf0;
+    border-radius: 7px;
+
+    outline: none;
+    background: white;
+
+    color: #29384b;
+    font-size: 11px;
+
+    transition: border 0.2s;
+}
+
+.resource-fields input:focus,
+.resource-fields select:focus {
+    border-color: var(--secondary);
+}
+
+.resource-fields input:disabled,
+.resource-fields select:disabled {
+    cursor: not-allowed;
+    background: #f1f3f5;
+}
+
+.resource-cost {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px;
+    border-radius: 7px;
+    background: #f8fafc;
+
+    color: #7c8998;
+    font-size: 10px;
+}
+
+.resource-cost strong {
+    color: #26384d;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   13. COST BREAKDOWN
+========================================= */
+
+.breakdown-panel {
+    min-height: 350px;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 220px;
+    height: 220px;
+
+    margin: 10px auto 20px;
+}
+
+.chart-container canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    pointer-events: none;
+}
+
+.chart-center strong {
+    display: block;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 21px;
+}
+
+.chart-center span {
+    color: #9aa4b1;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.chart-legend {
+    display: grid;
+    gap: 13px;
+}
+
+.chart-legend > div {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    font-size: 11px;
+    color: #788596;
+}
+
+.chart-legend strong {
+    margin-left: auto;
+    color: #26384d;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+}
+
+.ec2-dot {
+    background: var(--ec2);
+}
+
+.s3-dot {
+    background: var(--s3);
+}
+
+.rds-dot {
+    background: var(--rds);
+}
+
+.transfer-dot {
+    background: var(--transfer);
+}
+
+
+/* =========================================
+   14. PRICING INFORMATION
+========================================= */
+
+.pricing-panel {
+    margin-top: 20px;
+}
+
+.pricing-panel > p {
+    color: #84909e;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 13px;
+}
+
+.pricing-panel a {
+    color: #d47c22;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pricing-panel a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   15. FOOTER
+========================================= */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 23px 3px 0;
+
+    color: #8c98a6;
+    font-size: 10px;
+}
+
+
+/* =========================================
+   16. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1050px) {
+
+    .sidebar {
+        width: 205px;
+        min-width: 205px;
+    }
+
+    .main-content {
+        padding: 25px 22px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .breakdown-panel {
+        min-height: auto;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        padding: 20px 15px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .topbar h1 {
+        font-size: 21px;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .region-badge {
+        display: none;
+    }
+
+    .welcome-section {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 27px 0 20px;
+    }
+
+    .welcome-section h2 {
+        font-size: 23px;
+    }
+
+    .billing-period {
+        text-align: left;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .summary-card {
+        padding: 17px;
+    }
+
+    .summary-card h2 {
+        font-size: 25px;
+    }
+
+    .resource-fields {
+        margin-left: 0;
+    }
+
+    .calculator-panel,
+    .breakdown-panel,
+    .pricing-panel {
+        padding: 16px;
+    }
+
+    .footer {
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .resource-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-cost {
+        grid-column: auto;
+    }
+
+    .header-actions {
+        display: none;
+    }
+
+}
+
+.calculation-error {
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border: 1px solid #f0b4ae;
+    border-radius: 8px;
+    background: #fff1ef;
+    color: #a83226;
+    font-size: 13px;
+}
+
+.calculation-error[hidden] {
+    display: none;
+}
+
+.region-select {
+    padding: 10px 14px;
+    border: 1px solid #dce3eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #172b45;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+.region-select:focus {
+    border-color: #f59a38;
+    box-shadow: 0 0 0 3px rgba(245, 154, 56, 0.12);
+}
+
+.breakdown-panel {
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.breakdown-panel .section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.export-button {
+    background: #172b45;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.export-button:hover {
+    background: #263f5d;
+}
+
+.breakdown-item {
+    display: grid;
+    grid-template-columns: 1fr 55px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.breakdown-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    color: #526174;
+}
+
+.breakdown-item strong {
+    text-align: right;
+    font-size: 13px;
+    color: #172b45;
+}
+
+.service-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.ec2-dot { background: #f39a3d; }
+.s3-dot { background: #5d9bd8; }
+.rds-dot { background: #9875d6; }
+.transfer-dot { background: #46b58e; }
+
+.breakdown-track {
+    grid-column: 1 / -1;
+    height: 8px;
+    border-radius: 20px;
+    background: #edf1f5;
+    overflow: hidden;
+}
+
+.breakdown-progress {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}
+
+.ec2-progress { background: #f39a3d; }
+.s3-progress { background: #5d9bd8; }
+.rds-progress { background: #9875d6; }
+.transfer-progress { background: #46b58e; }
+
+@media (max-width: 600px) {
+    .breakdown-panel .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
